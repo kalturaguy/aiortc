@@ -11,6 +11,7 @@ from .codecs import get_capabilities, get_encoder, is_rtx
 from .codecs.base import Encoder
 from .exceptions import InvalidStateError
 from .mediastreams import MediaStreamError, MediaStreamTrack
+from .samplesfile import PassthroughEncoder
 from .rtcrtpparameters import RTCRtpCodecParameters, RTCRtpSendParameters
 from .rtp import (
     RTCP_PSFB_APP,
@@ -83,6 +84,8 @@ class RTCRtpSender:
         self.__started = False
         self.__stats = RTCStatsReport()
         self.__transport = transport
+        self.__samples_writer = None
+        self.__encoder = PassthroughEncoder()
 
         # stats
         self.__lsr: Optional[int] = None
